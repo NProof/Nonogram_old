@@ -1,7 +1,7 @@
-// bitset::set
-#include <iostream>       // std::cout
+#include <iostream>
+#include <cstdio>
 #include <algorithm>
-#include <bitset>         // std::bitset
+#include <bitset>
 #include <set>
 
 using namespace std;
@@ -102,27 +102,30 @@ public :
 	}
 };
 
-int main ()
+int main (int argc, char** argv)
 {
-	int ms[3]{10, 11, 1};
-	Line line0(ms, 3);
-	cout << line0.each0 << endl;
-	cout << line0.each1 << endl;
-	for (std::vector<int>::iterator it = line0.ns.begin(); it !=  line0.ns.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
-	bitset<25> all1, all0;
-	all1.flip();
-	line0.allIn(all0, all1);
-	cout << all1 << " and 0 : " << all0 << endl;
-	cout << line0.possibleSet.size() << endl;
-	for (std::set<std::bitset<25>, BitsetCmp>::iterator it=line0.possibleSet.begin(); it!=line0.possibleSet.end(); ++it){
-		cout << *it << endl;
-	}
-	line0.reducePossible(std::bitset<25>("1111111111111111111111101"), std::bitset<25>("00000000000100000000000000"));
-	cout << line0.possibleSet.size() << " : " << endl;
-	for (std::set<std::bitset<25>, BitsetCmp>::iterator it=line0.possibleSet.begin(); it!=line0.possibleSet.end(); ++it){
-		cout << *it << endl;
-	}
+  if(argc>1){
+    int f = 1;
+    while(f<argc){
+      FILE * inputFile;
+      inputFile = fopen(argv[f], "r");
+      while(1){
+        int qn, ch;
+        if(fscanf(inputFile, "$%d", &qn)!=1)
+          break;
+        cout << "$" << qn << endl;
+        for(int j=0; j<50; j++){
+          int cc;
+          do{
+            cc = fscanf(inputFile, "%d%c", &qn, &ch);   
+            cout << qn << " ";                  
+          }
+          while(cc==2&&ch!='\n');        
+          cout << endl;                  
+        }
+      }
+      f++;   
+    }
+  }
 	return 0;
 }
