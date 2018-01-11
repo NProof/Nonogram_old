@@ -20,20 +20,18 @@ public :
 	std::bitset<25> each1;
 	std::set<std::bitset<25>, BitsetCmp> possibleSet;
 	
-	Line(int *ms, int n){
+	Line(std::vector<int> ms){
 		each0.flip();
-		for(int i=0; i<n; i++)
-			ns.push_back(ms[i]);
+		ns = ms;
 		possibleSet = possible();
 	}
-	
 	
 	std::set<std::bitset<25>, BitsetCmp> possible(){
 		std::set<std::bitset<25>, BitsetCmp> resultSet;
 		int n = ns.size();
 		int sum = 0;
 		for(int i=0; i<n; i++)
-			sum += ns[i];
+      sum += ns[i];
 		int n0 = 25-sum+1;
 		for(int i=0; i<(1<<n0); i++){
 			std::bitset<25> bitCombition(i);
@@ -86,25 +84,32 @@ public :
 	
 };
 
+enum class Solved { SOLVED=1, CONFIG=2, UNKWOKE=3 };
+
 class Broad{
 public :
 	Line *rows;
 	Line *cols;
 	
-	Broad(int **rowCondition, int *rown, int **colCondition, int *coln){
+	Broad(std::vector<int> *rowConditions, std::vector<int> *colConditions){
 		rows = (Line*) malloc(25*sizeof(Line));
 		cols = (Line*) malloc(25*sizeof(Line));
 		for(int i=0; i<25; i++){
-			rows[i] = Line(rowCondition[i],rown[i]);
+			rows[i] = Line(rowConditions[i]);
 		}
 		for(int j=0; j<25; j++){
-			rows[j] = Line(colCondition[j],coln[j]);
+			cols[j] = Line(colConditions[j]);
 		}
 	}
+  
+  //Solved solve(){
+    return Solved::SOLVED;
+  }
 };
 
 int main (int argc, char** argv)
 {
+  freopen("run.out", "w", stdout);
   if(argc>1){
     int f = 1;
     while(f<argc){
@@ -115,18 +120,25 @@ int main (int argc, char** argv)
         if(fscanf(inputFile, "$%d", &qn)!=1)
           break;
         cout << "$" << qn << endl;
+        std::vector<int> rows[25]; 
+        std::vector<int> cols[25];
         for(int j=0; j<50; j++){
           int cc;     
           std::vector<int> myv;
           do{           
-            cc = fscanf(inputFile, "%d%c", &qn, &ch);   
-            cout << qn << " "; 
+            cc = fscanf(inputFile, "%d%c", &qn, &ch); 
             myv.push_back(qn);                 
           }
-          while(cc==2&&ch!='\n');        
-          cout << endl; 
-          cout << myv.size() << endl;                 
+          while(cc==2&&ch!='\n'); 
+          if(j/25){
+            cols[j-25] = myv;
+          }
+          else{
+            rows[j] = myv;
+          }                   
         }
+        Broad nonogram(rows, cols);  
+        cout << nonogram.solve() << endl;
       }
       f++;   
     }
