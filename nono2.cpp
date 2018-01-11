@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdio>
-#include <algorithm>
+#include <algorithm> 
+#include <vector>
 #include <bitset>
 #include <set>
 
@@ -115,13 +116,16 @@ int main (int argc, char** argv)
           break;
         cout << "$" << qn << endl;
         for(int j=0; j<50; j++){
-          int cc;
-          do{
+          int cc;     
+          std::vector<int> myv;
+          do{           
             cc = fscanf(inputFile, "%d%c", &qn, &ch);   
-            cout << qn << " ";                  
+            cout << qn << " "; 
+            myv.push_back(qn);                 
           }
           while(cc==2&&ch!='\n');        
-          cout << endl;                  
+          cout << endl; 
+          cout << myv.size() << endl;                 
         }
       }
       f++;   
