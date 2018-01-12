@@ -257,7 +257,17 @@ public :
 	}
 	
 	bool unknownOne(int *i, int *j){
-		
+		int k, l;
+		for(k=0; k<25; k++){
+			for(l=0; l<25; l++){
+				if(rows[k]->all_0[24-l]){
+					*i = k;
+					*j = l;
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 };
 
@@ -273,7 +283,8 @@ bool solveAll(Broad * nonogram){
 			case 0:
 				int i, j;
 				nonogram->unknownOne(&i, &j);
-				;
+				cout << " i = " << i << " , j = " << j << endl;
+				nonogram->printBroad();
 		};
 	}
 	return false;
