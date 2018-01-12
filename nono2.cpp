@@ -255,6 +255,10 @@ public :
 		// printBroad();
 		return ans;
 	}
+	
+	bool unknownOne(int *i, int *j){
+		
+	}
 };
 
 bool solveAll(Broad * nonogram){
@@ -267,6 +271,8 @@ bool solveAll(Broad * nonogram){
 			case 1:
 				return true;
 			case 0:
+				int i, j;
+				nonogram->unknownOne(&i, &j);
 				;
 		};
 	}
