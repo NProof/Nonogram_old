@@ -210,25 +210,12 @@ public :
 						change1 ^= rows[j]->all_1;
 						
 						uniRows.set(j,0);
-						
-						// std::bitset<25> uchange, reuchange;
-						// reuchange |= change0 | change1;
-						// for(int k=0; k<24; k++){
-							// uchange[k] = reuchange[24-k];
-						// }
-						// uniCols |= uchange;
-						
 						reUniCols |= change0 | change1;
-						
-						// cout << " uchange : " << uchange << " in R " << j << endl;
-						// cout << " uniRows : " << uniRows << " in R " << j << endl;
-						// cout << " uniCols : " << uniCols << " in R " << j << endl;
 					}
 				}
 				for(int k=0; k<24; k++){
 					uniCols[k] = reUniCols[24-k];
 				}
-				// printBroad();
 			}
 			
 			for(int i=0; i<25; i++){
@@ -239,6 +226,10 @@ public :
 			}
 			
 			if(uniCols.any()){
+				std::bitset<25> reUniRows;
+				for(int k=0; k<24; k++){
+					reUniRows[k] = uniRows[24-k];
+				}
 				for(int i=0; i<25; i++){
 					if(uniCols[i]){
 						std::bitset<25> change0 = cols[i]->all_0;
@@ -248,16 +239,11 @@ public :
 						change0 ^= cols[i]->all_0;
 						change1 ^= cols[i]->all_1;
 						uniCols.set(i,0);
-						std::bitset<25> uchange, reuchange;
-						reuchange |= change0 | change1;
-						for(int k=0; k<24; k++){
-							uchange[k] = reuchange[24-k];
-						}
-						uniRows |= uchange;
-						// cout << " uchange : " << uchange << " in C " << i << endl;
-						// cout << " uniRows : " << uniRows << " in C " << i << endl;
-						// cout << " uniCols : " << uniCols << " in C " << i << endl;
+						reUniRows |= change0 | change1;
 					}
+				}
+				for(int k=0; k<24; k++){
+					uniRows[k] = reUniRows[24-k];
 				}
 				// printBroad();
 			}
