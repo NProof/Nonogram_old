@@ -260,7 +260,7 @@ public :
 		int k, l;
 		for(k=0; k<25; k++){
 			for(l=0; l<25; l++){
-				if(rows[k]->all_0[24-l]){
+				if((rows[k]->all_0^rows[k]->all_1)[24-l]){
 					*i = k;
 					*j = l;
 					return true;
