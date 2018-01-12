@@ -5,7 +5,7 @@
 #include <vector>
 #include <bitset>
 #include <set>
-#include <time.h>
+#include <ctime>
 
 using namespace std;
 
@@ -134,7 +134,7 @@ public :
 	
 	void printBroad(){
 		
-		cout << "\t \tBroad ( R ) :\n\n" ;
+		cout << "\t \tBroad ( R ) : 0\n\n" ;
 		for(int i=0; i<25; i++){
 			for(int j=0; j<25; j++){
 				int white = rows[i]->all_0[24-j];
@@ -144,7 +144,7 @@ public :
 			cout << endl;
 		}
 		
-		cout << "\t \tBroad ( C ) :\n\n" ;
+		cout << "\t \tBroad ( C ) : 1\n\n" ;
 		for(int i=0; i<25; i++){
 			for(int j=0; j<25; j++){
 				int white = cols[j]->all_0[24-i];
@@ -184,48 +184,85 @@ public :
 				uniCols.set(i,1);
 			}
 		}
-	}	
-		std::array<std::bitset<25>, 25> changRow0;
-		std::array<std::bitset<25>, 25> changRow1;
-		std::array<std::bitset<25>, 25> changCol0;
-		std::array<std::bitset<25>, 25> changCol1;
-
+	}
 		while(uniRows.any()||uniCols.any()){
-			if(uniRows.any()){
+			for(int i=0; i<25; i++){
 				for(int j=0; j<25; j++){
-					if(uniRows[j]){
-						// cout << "\n" << rows[j]-> possibleSet.size();
-						// cout << '\n' << rows[j]->all_0 << '\n' << rows[j]->all_1 ;
-						std::bitset<25> change0 = rows[j]->all_0;
-						std::bitset<25> change1 = rows[j]->all_1;
-						cout << " ------  ------  ------ -------- -------- ------ -------" << endl;
-						cout << " all : " << rows[j]->all_0 << " ; " << rows[j]->all_1 << endl;
-						
-						rows[j]->reducePossible(transRow0[j], transRow1[j]);
-						rows[j]->allIn();
-						// cout << '\n' << rows[j]->all_0 << '\n' << rows[j]->all_1 ;
-						// cout << "\n" << rows[j]-> possibleSet.size() << endl;
-						change0 ^= rows[j]->all_0;
-						change1 ^= rows[j]->all_1;
-						cout << " cha : " << change0 << " ; " << change1 << endl;
-						cout << " all : " << rows[j]->all_0 << " ; " << rows[j]->all_1 << endl;
-						
-						uniRows.set(j,0);
-					}
-				}
-			}
-			if(uniCols.any()){
-				for(int i=0; i<25; i++){
-					if(uniCols[i]){
-						cols[i]->reducePossible(transCol0[i], transCol1[i]);
-						cols[i]->allIn();
-						uniCols.set(i,0);
-					}
+					transRow0[i][j] = cols[24-j]->all_0[24-i];
+					transRow1[i][j] = cols[24-j]->all_1[24-i];
 				}
 			}
 			
-			// printBroad();
+			if(uniRows.any()){
+				std::bitset<25> reUniCols;
+				for(int k=0; k<24; k++){
+					reUniCols[k] = uniCols[24-k];
+				}
+				for(int j=0; j<25; j++){
+					if(uniRows[j]){
+						std::bitset<25> change0 = rows[j]->all_0;
+						std::bitset<25> change1 = rows[j]->all_1;
+						
+						rows[j]->reducePossible(transRow0[j], transRow1[j]);
+						rows[j]->allIn();
+						
+						change0 ^= rows[j]->all_0;
+						change1 ^= rows[j]->all_1;
+						
+						uniRows.set(j,0);
+						
+						// std::bitset<25> uchange, reuchange;
+						// reuchange |= change0 | change1;
+						// for(int k=0; k<24; k++){
+							// uchange[k] = reuchange[24-k];
+						// }
+						// uniCols |= uchange;
+						
+						reUniCols |= change0 | change1;
+						
+						// cout << " uchange : " << uchange << " in R " << j << endl;
+						// cout << " uniRows : " << uniRows << " in R " << j << endl;
+						// cout << " uniCols : " << uniCols << " in R " << j << endl;
+					}
+				}
+				for(int k=0; k<24; k++){
+					uniCols[k] = reUniCols[24-k];
+				}
+				// printBroad();
+			}
+			
+			for(int i=0; i<25; i++){
+				for(int j=0; j<25; j++){
+					transCol0[i][j] = rows[24-j]->all_0[24-i];
+					transCol1[i][j] = rows[24-j]->all_1[24-i];
+				}
+			}
+			
+			if(uniCols.any()){
+				for(int i=0; i<25; i++){
+					if(uniCols[i]){
+						std::bitset<25> change0 = cols[i]->all_0;
+						std::bitset<25> change1 = cols[i]->all_1;
+						cols[i]->reducePossible(transCol0[i], transCol1[i]);
+						cols[i]->allIn();
+						change0 ^= cols[i]->all_0;
+						change1 ^= cols[i]->all_1;
+						uniCols.set(i,0);
+						std::bitset<25> uchange, reuchange;
+						reuchange |= change0 | change1;
+						for(int k=0; k<24; k++){
+							uchange[k] = reuchange[24-k];
+						}
+						uniRows |= uchange;
+						// cout << " uchange : " << uchange << " in C " << i << endl;
+						// cout << " uniRows : " << uniRows << " in C " << i << endl;
+						// cout << " uniCols : " << uniCols << " in C " << i << endl;
+					}
+				}
+				// printBroad();
+			}
 		}
+		printBroad();
 	}
 };
 
@@ -268,7 +305,6 @@ int main (int argc, char** argv)
 				Broad *nonogram = new Broad(rows, cols);  
 				nonogram->solve();
 				delete nonogram;
-				/**/
 				startTime = clock() - startTime;
 				printf ("\t\tIt took %d clicks (%f seconds).\n", startTime, ((float)startTime)/CLOCKS_PER_SEC);
 			}
@@ -277,5 +313,6 @@ int main (int argc, char** argv)
 	}
 	totalTime = clock() - totalTime;
 	printf ("\tIt took %d clicks (%f seconds).\n", totalTime, ((float)totalTime)/CLOCKS_PER_SEC);
+	
 	return 0;
 }
