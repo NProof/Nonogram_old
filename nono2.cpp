@@ -185,16 +185,31 @@ public :
 			}
 		}
 	}	
+		std::array<std::bitset<25>, 25> changRow0;
+		std::array<std::bitset<25>, 25> changRow1;
+		std::array<std::bitset<25>, 25> changCol0;
+		std::array<std::bitset<25>, 25> changCol1;
+
 		while(uniRows.any()||uniCols.any()){
 			if(uniRows.any()){
 				for(int j=0; j<25; j++){
 					if(uniRows[j]){
 						// cout << "\n" << rows[j]-> possibleSet.size();
 						// cout << '\n' << rows[j]->all_0 << '\n' << rows[j]->all_1 ;
+						std::bitset<25> change0 = rows[j]->all_0;
+						std::bitset<25> change1 = rows[j]->all_1;
+						cout << " ------  ------  ------ -------- -------- ------ -------" << endl;
+						cout << " all : " << rows[j]->all_0 << " ; " << rows[j]->all_1 << endl;
+						
 						rows[j]->reducePossible(transRow0[j], transRow1[j]);
 						rows[j]->allIn();
 						// cout << '\n' << rows[j]->all_0 << '\n' << rows[j]->all_1 ;
 						// cout << "\n" << rows[j]-> possibleSet.size() << endl;
+						change0 ^= rows[j]->all_0;
+						change1 ^= rows[j]->all_1;
+						cout << " cha : " << change0 << " ; " << change1 << endl;
+						cout << " all : " << rows[j]->all_0 << " ; " << rows[j]->all_1 << endl;
+						
 						uniRows.set(j,0);
 					}
 				}
@@ -209,7 +224,7 @@ public :
 				}
 			}
 			
-			printBroad();
+			// printBroad();
 		}
 	}
 };
@@ -231,7 +246,7 @@ int main (int argc, char** argv)
 				if(fscanf(inputFile, "$%d", &qn)!=1)
 					break;
 				clock_t startTime = clock();
-				cout << "$" << qn ;
+				cout << "$" << qn << endl;
 				std::array<std::vector<int>, 25> rows;
 				std::array<std::vector<int>, 25> cols;
 				
