@@ -190,7 +190,8 @@ public :
 						std::bitset<25> change0 = rows[j]->all_0;
 						std::bitset<25> change1 = rows[j]->all_1;
 						
-						rows[j]->reducePossible(transRow0[j], transRow1[j]);
+						if(!rows[j]->reducePossible(transRow0[j], transRow1[j]))
+							return -1;
 						rows[j]->allIn();
 						
 						change0 ^= rows[j]->all_0;
@@ -221,7 +222,8 @@ public :
 					if(uniCols[i]){
 						std::bitset<25> change0 = cols[i]->all_0;
 						std::bitset<25> change1 = cols[i]->all_1;
-						cols[i]->reducePossible(transCol0[i], transCol1[i]);
+						if(!cols[i]->reducePossible(transCol0[i], transCol1[i]))
+							return -1;
 						cols[i]->allIn();
 						change0 ^= cols[i]->all_0;
 						change1 ^= cols[i]->all_1;
