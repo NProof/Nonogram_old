@@ -155,7 +155,7 @@ public :
 		}
 	}
 	
-	void solve(){
+	int solve(){
 		std::array<std::bitset<25>, 25> transRow0;
 		std::array<std::bitset<25>, 25> transRow1;
 		std::array<std::bitset<25>, 25> transCol0;
@@ -180,13 +180,6 @@ public :
 		}
 	}
 		while(uniRows.any()||uniCols.any()){
-			for(int i=0; i<25; i++){
-				for(int j=0; j<25; j++){
-					transRow0[i][j] = cols[24-j]->all_0[24-i];
-					transRow1[i][j] = cols[24-j]->all_1[24-i];
-				}
-			}
-			
 			if(uniRows.any()){
 				std::bitset<25> reUniCols;
 				for(int k=0; k<24; k++){
@@ -240,8 +233,24 @@ public :
 					uniRows[k] = reUniRows[24-k];
 				}
 			}
+			
+			for(int i=0; i<25; i++){
+				for(int j=0; j<25; j++){
+					transRow0[i][j] = cols[24-j]->all_0[24-i];
+					transRow1[i][j] = cols[24-j]->all_1[24-i];
+				}
+			}
 		}
+		
+		int ans = 1;
+		for(int j=0; j<25; j++){
+			rows[j]->reducePossible(transRow0[j], transRow1[j]);
+			ans = (rows[j]->possibleSet.size()==1) ? ans : 0;
+			rows[j]->allIn();
+		}
+		
 		// printBroad();
+		return ans;
 	}
 };
 
@@ -282,7 +291,7 @@ int main (int argc, char** argv)
 					}                   
 				}
 				Broad *nonogram = new Broad(rows, cols);  
-				nonogram->solve();
+				cout << " nonogram->solve() : " << nonogram->solve() << endl;
 				delete nonogram;
 				startTime = clock() - startTime;
 				printf ("\t\tIt took %d clicks (%f seconds).\n", startTime, ((float)startTime)/CLOCKS_PER_SEC);
