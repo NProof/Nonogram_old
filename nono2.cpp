@@ -257,6 +257,22 @@ public :
 	}
 };
 
+bool solveAll(Broad * nonogram){
+	std::stack<Broad *> nonogramStack;
+	nonogramStack.push( nonogram );
+	while(!nonogramStack.empty()){
+		nonogram = nonogramStack.top();
+		nonogramStack.pop();
+		switch(nonogram->solve()){
+			case 1:
+				return true;
+			case 0:
+				;
+		};
+	}
+	return false;
+}
+	
 int main (int argc, char** argv)
 {
 #if defined (LOCAL)
@@ -294,8 +310,7 @@ int main (int argc, char** argv)
 					}                   
 				}
 				Broad *nonogram = new Broad(rows, cols);
-				std::stack<Broad *> nonogramStack;
-				nonogram->solve();
+				solveAll(nonogram);
 				delete nonogram;
 				startTime = clock() - startTime;
 				printf ("\t\tIt took %d clicks (%f seconds).\n", startTime, ((float)startTime)/CLOCKS_PER_SEC);
