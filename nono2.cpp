@@ -5,6 +5,7 @@
 #include <vector>
 #include <bitset>
 #include <set>
+#include <stack>
 #include <ctime>
 
 using namespace std;
@@ -292,8 +293,9 @@ int main (int argc, char** argv)
 						rows[j] = myv;
 					}                   
 				}
-				Broad *nonogram = new Broad(rows, cols);  
-				cout << " nonogram->solve() : " << nonogram->solve() << endl;
+				Broad *nonogram = new Broad(rows, cols);
+				std::stack<Broad *> nonogramStack;
+				nonogram->solve();
 				delete nonogram;
 				startTime = clock() - startTime;
 				printf ("\t\tIt took %d clicks (%f seconds).\n", startTime, ((float)startTime)/CLOCKS_PER_SEC);
