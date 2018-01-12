@@ -156,12 +156,6 @@ public :
 	}
 	
 	void solve(){
-		std::set<Line*> rset;
-		std::set<Line*> cset;
-		for(int i=0; i<25; i++){
-			rset.insert(rows[i]);
-			cset.insert(cols[i]);
-		}
 		std::array<std::bitset<25>, 25> transRow0;
 		std::array<std::bitset<25>, 25> transRow1;
 		std::array<std::bitset<25>, 25> transCol0;
@@ -245,10 +239,9 @@ public :
 				for(int k=0; k<24; k++){
 					uniRows[k] = reUniRows[24-k];
 				}
-				// printBroad();
 			}
 		}
-		printBroad();
+		// printBroad();
 	}
 };
 
