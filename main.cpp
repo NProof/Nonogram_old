@@ -24,7 +24,8 @@ int main (int argc, char** argv)
 				if(fscanf(inputFile, "$%d", &qn)!=1)
 					break;
 				clock_t startTime = clock();
-				std::cout << "$" << qn << std::endl;
+				// std::cout << "$" << qn << std::endl;
+				std::cout << "$" << qn << endl;
 				std::array<std::vector<int>, 25> rows;
 				std::array<std::vector<int>, 25> cols;
 				
@@ -45,11 +46,15 @@ int main (int argc, char** argv)
 				}
 				
 				Nonogram *nonogram = new Nonogram(rows, cols);
-				// std::set<Broad, Broad::compare> ans = nonogram->solve();
+				Solver solver = Solver(nonogram);
+				std::set<Broad, Broad::compare> ans = solver.solve();
 				// if(!ans.empty())
 					// std::cout << *ans.begin() << std::endl;
 				// else
 					// std::cout << "No Any Broad Satisfy The Nonogram." << std::endl;
+				
+				// Broad broad = Broad();
+				// cout << "broad.solve(*nonogram) is " << broad.solve(*nonogram);
 				
 				startTime = clock() - startTime;
 				printf ("\tIt took %d clicks (%f seconds).\n", startTime, ((float)startTime)/CLOCKS_PER_SEC);
