@@ -1,17 +1,48 @@
 // #include <iostream>
 // #include <cstdio>
-// #include <bitset>
+#include <bitset>
 #include <array>
 #include <vector>
 #include <set>
-// #include <ctime>
-
-// using namespace std;
 
 class Broad{
 public :
+	std::bitset<625> white;
+	std::bitset<625> block;
 	
+	Broad(){
+		white.flip();
+	}
+	
+	char unitspace(bool white, bool block) const {
+		if(white&&!block){
+			return '.' ;
+		}
+		else if(!white&&!block){
+			return '0' ;
+		}
+		else if(block&&white){
+			return '1' ;
+		}
+		else{
+			return '%' ;
+		}
+	}
+	
+	friend std::ostream& operator<<(std::ostream& os, const Broad& broad);
 };
+
+std::ostream& operator<<(std::ostream& os, const Broad& broad)  
+{  
+    os << " white : " << &broad << '\n';
+	for(int i=0; i<25; i++){
+		for(int j=0; j<25; j++){
+			os << " " << broad.unitspace(broad.white[25*i+j], broad.block[25*i+j]);
+		}
+		os << '\n';
+	}
+    return os;  
+}  
 
 class Nonogram{
 public :
