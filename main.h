@@ -230,6 +230,10 @@ public :
 		for(int i=0; i<25; i++){
 			reduceLine(broad->getLine(true, i), possibleSetArrayOfRow[i]);
 		}
+		std::bitset<25> reUniCols;
+		for(int k=0; k<24; k++){
+			reUniCols[k] = broad->uniCols[24-k];
+		}
 		for(int j=0; j<25; j++){
 			Line line = broad->getLine(false, 1);
 			std::bitset<25> *changeW;
@@ -238,6 +242,9 @@ public :
 				cout << "*changeW : " << *changeW << endl;
 				cout << "*changeB : " << *changeB << endl;
 			}
+		}
+		for(int k=0; k<24; k++){
+			broad->uniCols[k] = reUniCols[24-k];
 		}
 		// mapRow[broad] = possibleSetArrayOfRow;
 		// mapCol[broad] = possibleSetArrayOfCol;
