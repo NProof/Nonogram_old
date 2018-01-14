@@ -1,11 +1,29 @@
 #include <iostream>
 #include <cstdio>
+#include <bitset>
 #include <array>
 #include <vector>
-#include <bitset>
+#include <set>
 #include <ctime>
 
-using namespace std;
+// using namespace std;
+
+class Broad{
+public :
+	
+};
+
+class Nonogram{
+public :
+	Nonogram(std::array<std::vector<int>, 25> ConditionsOfRow, std::array<std::vector<int>, 25> ConditionsOfCol){
+	}
+	
+	std::set<Broad> solve(Broad initBroad = Broad()){
+		std::set<Broad> ans;
+		
+		return ans;
+	}
+};
 
 int main (int argc, char** argv)
 {
@@ -24,7 +42,7 @@ int main (int argc, char** argv)
 				if(fscanf(inputFile, "$%d", &qn)!=1)
 					break;
 				clock_t startTime = clock();
-				cout << "$" << qn << endl;
+				std::cout << "$" << qn << std::endl;
 				std::array<std::vector<int>, 25> rows;
 				std::array<std::vector<int>, 25> cols;
 				
@@ -43,6 +61,10 @@ int main (int argc, char** argv)
 						rows[j] = myv;
 					}                   
 				}
+				
+				Nonogram *nonogram = new Nonogram(rows, cols);
+				std::set<Broad> ans = nonogram->solve();
+				
 				startTime = clock() - startTime;
 				printf ("\tIt took %d clicks (%f seconds).\n", startTime, ((float)startTime)/CLOCKS_PER_SEC);
 			}
