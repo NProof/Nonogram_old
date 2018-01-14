@@ -45,11 +45,11 @@ int main (int argc, char** argv)
 				}
 				
 				Nonogram *nonogram = new Nonogram(rows, cols);
-				std::set<Broad, Broad::compare> ans = nonogram->solve();
-				if(!ans.empty())
-					std::cout << *ans.begin() << std::endl;
-				else
-					std::cout << "No Any Broad Satisfy The Nonogram." << std::endl;
+				// std::set<Broad, Broad::compare> ans = nonogram->solve();
+				// if(!ans.empty())
+					// std::cout << *ans.begin() << std::endl;
+				// else
+					// std::cout << "No Any Broad Satisfy The Nonogram." << std::endl;
 				
 				startTime = clock() - startTime;
 				printf ("\tIt took %d clicks (%f seconds).\n", startTime, ((float)startTime)/CLOCKS_PER_SEC);
