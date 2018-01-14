@@ -12,10 +12,6 @@ int main (int argc, char** argv)
 #if defined (LOCAL)
 	freopen("run.out", "w", stdout);
 #endif
-	
-// #if defined (LOCAL)
-	// freopen("run.out", "w", stdout);
-// #endif
 	Broad broad = Broad();
 	std::cout << broad << std::endl;
 	return 0;
