@@ -2,6 +2,7 @@
 // #include <cstdio>
 #include <bitset>
 #include <array>
+#include <stack>
 #include <vector>
 #include <set>
 #include <map>
@@ -102,6 +103,8 @@ public :
 	std::bitset<625> block;
 	std::bitset<25> uniRows;
 	std::bitset<25> uniCols;
+	std::array<std::set<std::bitset<25>, compareBitset>, 25> possibleSetArrayOfRow;
+	std::array<std::set<std::bitset<25>, compareBitset>, 25> possibleSetArrayOfCol;
 	
 	Broad(){
 		white.flip();
@@ -176,6 +179,7 @@ std::ostream& operator<<(std::ostream& os, const Broad& broad){
 
 class Solver{
 	Nonogram *nonogram;
+	std::stack<Broad*> stackBroad;
 	// std::map<Broad*, std::array<std::set<std::bitset<25>, compareBitset>, 25>> mapRow;
 	// std::map<Broad*, std::array<std::set<std::bitset<25>, compareBitset>, 25>> mapCol;
 public :
@@ -183,9 +187,23 @@ public :
 		this->nonogram = nonogram;
 	}
 	
-	std::set<Broad, Broad::compare> solve(Broad initBroad = Broad()){
+	std::set<Broad, Broad::compare> solveAll(Broad *broad = new Broad()){
 		std::set<Broad, Broad::compare> ans;
-		cout << solve(&initBroad);
+		stackBroad.push(broad);
+		while(!stackBroad.empty()){
+			broad = stackBroad.top();
+			int rev = solve(broad);
+			if(rev == 1){
+				ans.insert(*broad);
+				return ans;
+			}
+			else{
+				stackBroad.pop();
+				if(rev == 0){
+					
+				}
+			}
+		}
 		return ans;
 	}
 	
@@ -226,13 +244,14 @@ public :
 	}
 	
 	int solve(Broad *broad){
-		std::array<std::set<std::bitset<25>, compareBitset>, 25> possibleSetArrayOfRow = nonogram->getPossibleSetArrayOfRow();
-		std::array<std::set<std::bitset<25>, compareBitset>, 25> possibleSetArrayOfCol = nonogram->getPossibleSetArrayOfCol();
+		broad->possibleSetArrayOfRow = nonogram->getPossibleSetArrayOfRow();
+		broad->possibleSetArrayOfCol = nonogram->getPossibleSetArrayOfCol();
+		
 		int i;
 		for(i=0; i<25; i++){
 			Line line = broad->getLine(true, i);
-			reduceLine(line, possibleSetArrayOfRow[i]);
-			if(!inAll(possibleSetArrayOfRow[i], &line))
+			reduceLine(line, broad->possibleSetArrayOfRow[i]);
+			if(!inAll(broad->possibleSetArrayOfRow[i], &line))
 				return -1;
 			broad->setLine(line);
 		}
@@ -249,10 +268,12 @@ public :
 			
 			for(i=0; i<25; i++){
 				Line line = broad->getLine(false, i);
-				if(changeLine(&line, &possibleSetArrayOfCol[i], changeW, changeB)){
+				if(changeLine(&line, &broad->possibleSetArrayOfCol[i], changeW, changeB)){
 					broad->setLine(line);
 				}
-				else return -1;
+				else {
+					return -1;
+				}
 				reUniRows |= *changeW | *changeB;
 			}
 			for(i=0; i<25; i++){
@@ -268,7 +289,7 @@ public :
 			
 			for(i=0; i<25; i++){
 				Line line = broad->getLine(true, i);
-				if(changeLine(&line, &possibleSetArrayOfRow[i], changeW, changeB)){
+				if(changeLine(&line, &broad->possibleSetArrayOfRow[i], changeW, changeB)){
 					broad->setLine(line);
 				}
 				else return -1;
@@ -278,10 +299,11 @@ public :
 				broad->uniCols[24-i] = reUniCols[i];
 			}
 			// cout << broad->uniCols << endl ;
+		break;
 		}
 		cout <<  *broad << endl;
-		// mapRow[broad] = possibleSetArrayOfRow;
-		// mapCol[broad] = possibleSetArrayOfCol;
+		// mapRow[broad] = broad->possibleSetArrayOfRow;
+		// mapCol[broad] = broad->possibleSetArrayOfCol;
 		return (broad->block^broad->white).none() ? 1 : 0;
 	}
 };
