@@ -244,6 +244,8 @@ public :
 	}
 	
 	int solve(Broad *broad){
+		// std::array<std::set<std::bitset<25>, compareBitset>, 25> possibleSetArrayOfRow = nonogram->getPossibleSetArrayOfRow();
+		// std::array<std::set<std::bitset<25>, compareBitset>, 25> possibleSetArrayOfCol = nonogram->getPossibleSetArrayOfCol();
 		broad->possibleSetArrayOfRow = nonogram->getPossibleSetArrayOfRow();
 		broad->possibleSetArrayOfCol = nonogram->getPossibleSetArrayOfCol();
 		
