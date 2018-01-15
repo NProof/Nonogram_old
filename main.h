@@ -2,6 +2,7 @@
 // #include <cstdio>
 #include <bitset>
 #include <array>
+#include <stack>
 #include <vector>
 #include <set>
 #include <map>
@@ -183,9 +184,12 @@ public :
 		this->nonogram = nonogram;
 	}
 	
-	std::set<Broad, Broad::compare> solve(Broad initBroad = Broad()){
+	std::set<Broad, Broad::compare> solveAll(Broad *initBroad = new Broad()){
 		std::set<Broad, Broad::compare> ans;
-		cout << solve(&initBroad);
+		// std::stack<Broad*> stackBroad;
+		// stackBroad.push(initBroad);
+		cout << solve(initBroad);
+		delete initBroad;
 		return ans;
 	}
 	
