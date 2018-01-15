@@ -221,49 +221,61 @@ public :
 		inAll(*possibleSet, line);
 		*changeW ^= line->white;
 		*changeB ^= line->block;
-		return changeW->any() || changeB-> any();	
+		return true;	
 	}
 	
 	int solve(Broad *broad){
 		std::array<std::set<std::bitset<25>, compareBitset>, 25> possibleSetArrayOfRow = nonogram->getPossibleSetArrayOfRow();
 		std::array<std::set<std::bitset<25>, compareBitset>, 25> possibleSetArrayOfCol = nonogram->getPossibleSetArrayOfCol();
-		
-		for(int i=0; i<25; i++){
+		int i;
+		for(i=0; i<25; i++){
 			Line line = broad->getLine(true, i);
 			reduceLine(line, possibleSetArrayOfRow[i]);
 			inAll(possibleSetArrayOfRow[i], &line);
 			broad->setLine(line);
 		}
-		// cout << *broad << endl;
-		// std::bitset<25> reUniCols;
-		// for(int k=0; k<24; k++){
-			// reUniCols[k] = broad->uniCols[24-k];
-		// }
+		// cout << broad->uniCols << endl ;
 		
-		for(int j=0; j<25; j++){
-			Line line = broad->getLine(false, j);
 			std::bitset<25> *changeW;
 			std::bitset<25> *changeB;
-			if(changeLine(&line, &possibleSetArrayOfCol[j], changeW, changeB)){
-				broad->setLine(line);
-				// cout << j << endl;
-				// cout << "*changeW : " << *changeW << endl;
-				// cout << "*changeB : " << *changeB << endl;
+			
+		while(broad->uniCols.any()){
+			std::bitset<25> reUniRows;
+			for(i=0; i<25; i++){
+				reUniRows[i] = broad->uniRows[24-i];
 			}
+			
+			for(i=0; i<25; i++){
+				Line line = broad->getLine(false, i);
+				if(changeLine(&line, &possibleSetArrayOfCol[i], changeW, changeB)){
+					broad->setLine(line);
+				}
+				reUniRows |= *changeW | *changeB;
+			}
+			for(i=0; i<25; i++){
+				broad->uniRows[24-i] = reUniRows[i];
+			}
+			// cout << broad->uniRows << endl ;
+				
+			std::bitset<25> reUniCols;
+				
+			for(i=0; i<25; i++){
+				reUniCols[i] = (broad->uniCols)[24-i];
+			}
+			
+			for(i=0; i<25; i++){
+				Line line = broad->getLine(true, i);
+				if(changeLine(&line, &possibleSetArrayOfRow[i], changeW, changeB)){
+					broad->setLine(line);
+				}
+				reUniCols |= *changeW | *changeB;
+			}
+			for(i=0; i<25; i++){
+				broad->uniCols[24-i] = reUniCols[i];
+			}
+			// cout << broad->uniCols << endl ;
 		}
-		// for(int i=0; i<25; i++){
-			Line line = broad->getLine(true, 0);
-			// std::bitset<25> *changeW;
-			// std::bitset<25> *changeB;
-			// if(changeLine(&line, &possibleSetArrayOfCol[i], changeW, changeB)){
-				// broad->setLine(line);B : " << *changeB << endl;
-			// }
-		// }
-		/**/
-		// for(int k=0; k<24; k++){
-			// broad->uniCols[k] = reUniCols[24-k];
-		// }
-		cout << *broad << endl;
+		cout <<  *broad << endl;
 		// mapRow[broad] = possibleSetArrayOfRow;
 		// mapCol[broad] = possibleSetArrayOfCol;
 		return 9;

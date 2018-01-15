@@ -56,6 +56,9 @@ int main (int argc, char** argv)
 				// Broad broad = Broad();
 				// cout << "broad.solve(*nonogram) is " << broad.solve(*nonogram);
 				
+				delete nonogram;
+				delete &solver;
+				
 				startTime = clock() - startTime;
 				printf ("\tIt took %d clicks (%f seconds).\n", startTime, ((float)startTime)/CLOCKS_PER_SEC);
 			}
