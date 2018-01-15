@@ -209,7 +209,7 @@ public :
 			line->block &= *it;
 			line->white |= *it;
 		}
-		return true;
+		return !possibleSet.empty();
 	}
 	
 	static bool changeLine(Line *line, std::set<std::bitset<25>, compareBitset> *possibleSet
@@ -218,7 +218,8 @@ public :
 		*changeW = line->white;
 		*changeB = line->block;
 		reduceLine(*line, *possibleSet);
-		inAll(*possibleSet, line);
+		if(!inAll(*possibleSet, line))
+			return false;
 		*changeW ^= line->white;
 		*changeB ^= line->block;
 		return true;	
@@ -231,7 +232,8 @@ public :
 		for(i=0; i<25; i++){
 			Line line = broad->getLine(true, i);
 			reduceLine(line, possibleSetArrayOfRow[i]);
-			inAll(possibleSetArrayOfRow[i], &line);
+			if(!inAll(possibleSetArrayOfRow[i], &line))
+				return -1;
 			broad->setLine(line);
 		}
 		// cout << broad->uniCols << endl ;
@@ -250,6 +252,7 @@ public :
 				if(changeLine(&line, &possibleSetArrayOfCol[i], changeW, changeB)){
 					broad->setLine(line);
 				}
+				else return -1;
 				reUniRows |= *changeW | *changeB;
 			}
 			for(i=0; i<25; i++){
@@ -268,6 +271,7 @@ public :
 				if(changeLine(&line, &possibleSetArrayOfRow[i], changeW, changeB)){
 					broad->setLine(line);
 				}
+				else return -1;
 				reUniCols |= *changeW | *changeB;
 			}
 			for(i=0; i<25; i++){
@@ -278,7 +282,7 @@ public :
 		cout <<  *broad << endl;
 		// mapRow[broad] = possibleSetArrayOfRow;
 		// mapCol[broad] = possibleSetArrayOfCol;
-		return 9;
+		return (broad->block^broad->white).none() ? 1 : 0;
 	}
 };
 
