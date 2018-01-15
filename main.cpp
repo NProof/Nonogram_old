@@ -48,13 +48,10 @@ int main (int argc, char** argv)
 				Nonogram *nonogram = new Nonogram(rows, cols);
 				Solver solver = Solver(nonogram);
 				std::set<Broad, Broad::compare> ans = solver.solve();
-				// if(!ans.empty())
-					// std::cout << *ans.begin() << std::endl;
-				// else
-					// std::cout << "No Any Broad Satisfy The Nonogram." << std::endl;
-				
-				// Broad broad = Broad();
-				// cout << "broad.solve(*nonogram) is " << broad.solve(*nonogram);
+				if(!ans.empty())
+					std::cout << *ans.begin() << std::endl;
+				else
+					std::cout << "No Any Broad Satisfy The Nonogram." << std::endl;
 				
 				delete nonogram;
 				delete &solver;
