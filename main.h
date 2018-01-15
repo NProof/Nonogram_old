@@ -188,7 +188,7 @@ public :
 		std::set<Broad, Broad::compare> ans;
 		// std::stack<Broad*> stackBroad;
 		// stackBroad.push(initBroad);
-		cout << solve(initBroad);
+		solve(initBroad);
 		delete initBroad;
 		return ans;
 	}
