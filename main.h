@@ -82,6 +82,7 @@ public :
 	int index;
 	std::bitset<25> block;
 	std::bitset<25> white;
+	
 	Line(std::bitset<25> bitsblock, std::bitset<25> bitswhite, bool isRow, int index){
 		this->satisfaction = false;
 		this->isRow = isRow;
