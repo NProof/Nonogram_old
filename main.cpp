@@ -53,8 +53,8 @@ int main (int argc, char** argv)
 				else
 					std::cout << "No Any Broad Satisfy The Nonogram." << std::endl;
 				
-				delete nonogram;
-				delete &solver;
+				// delete nonogram;
+				// delete &solver;
 				
 				startTime = clock() - startTime;
 				printf ("\tIt took %d clicks (%f seconds).\n", startTime, ((float)startTime)/CLOCKS_PER_SEC);
