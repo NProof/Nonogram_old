@@ -44,6 +44,68 @@ void getLine(){
 	cout << linec1.white << " : " << linec1.block << endl;
 }
 
+int test(int argc, char **argv){
+#if defined (LOCAL)
+	freopen("run.out", "w", stdout);
+#endif
+	if(argc>1){
+		int f = 1;
+		while(f<argc){
+			FILE * inputFile;
+			inputFile = fopen(argv[f], "r");
+			while(1){
+				int qn;
+				char ch;
+				if(fscanf(inputFile, "$%d", &qn)!=1)
+					break;
+				// std::cout << "$" << qn << std::endl;
+				std::cout << "$" << qn ;
+				std::array<std::vector<int>, 25> rows;
+				std::array<std::vector<int>, 25> cols;
+				
+				for(int j=0; j<50; j++){
+					int cc;     
+					std::vector<int> myv;
+					do{
+						cc = fscanf(inputFile, "%d%c", &qn, &ch); 
+						myv.push_back(qn);
+					}
+					while(cc==2&&ch!='\n'); 
+					if(j/25){
+						cols[j-25] = myv;
+					}
+					else{
+						rows[j] = myv;
+					}                   
+				}
+				
+				Nonogram *nonogram = new Nonogram(rows, cols);
+				Broad broad;
+				broad.write(1,1,1);
+				broad.write(1,2,0);
+				broad.write(1,4,1);
+				broad.write(1,6,0);
+				nonogram->solve(broad);
+				cout << broad << endl;
+				for(int i=0; i<25; i++){
+					// cout << (*(nonogram->LinesOfRow))[i]->block << endl;
+					cout << (*(nonogram->LinesOfRow))[i]->white << endl;
+				}
+				cout << "temp " << endl;
+				for(int j=0; j<25; j++){
+					// cout << (*(nonogram->LinesOfCol))[j]->block << endl;
+					cout << (*(nonogram->LinesOfCol))[j]->white << endl;
+				}
+				
+			}
+			f++;   
+		}
+	}
+	
+	return 0;
+}
+
+
 int main (int argc, char** argv)
 {
 #if defined (LOCAL)
@@ -53,5 +115,6 @@ int main (int argc, char** argv)
 	// case2();
 	// clonetest();
 	// getLine();
+	test(argc, argv);
 	return 0;
 }

@@ -11,15 +11,16 @@ struct compareBitset {
 
 class Line{
 public :
+	std::set<std::bitset<25>, compareBitset> possibleSet;
 	std::bitset<25> block;
 	std::bitset<25> white;
 	std::bitset<25> chang;
 };
 
 class Broad{
+public :
 	std::bitset<625> white;
 	std::bitset<625> block;
-public :
 	Broad(){
 		white.flip();
 	}
@@ -96,20 +97,34 @@ std::ostream& operator<<(std::ostream& os, const Broad& broad){
     return os;  
 }  
 
-/* class Nonogram{
-	std::array<std::set<std::bitset<25>, compareBitset>, 25> *possibleSetArrayOfRow;
-	std::array<std::set<std::bitset<25>, compareBitset>, 25> *possibleSetArrayOfCol;
+class Nonogram{
 public :
+	std::array<Line*, 25> *LinesOfRow;
+	std::array<Line*, 25> *LinesOfCol;
 	Nonogram(std::array<std::vector<int>, 25> ConditionsOfRow, std::array<std::vector<int>, 25> ConditionsOfCol){
-		possibleSetArrayOfRow = new std::array<std::set<std::bitset<25>, compareBitset>, 25>();
-		possibleSetArrayOfCol = new std::array<std::set<std::bitset<25>, compareBitset>, 25>();
+		LinesOfRow = new std::array<Line*, 25>();
+		LinesOfCol = new std::array<Line*, 25>();
 		for(int i=0; i<25; i++){
-			(*possibleSetArrayOfRow)[i] = possible(ConditionsOfRow[i]);
-			(*possibleSetArrayOfCol)[i] = possible(ConditionsOfCol[i]);
+			(*LinesOfRow)[i] = new Line();
+			(*LinesOfRow)[i]->possibleSet = possible(ConditionsOfRow[i]);
+			(*LinesOfCol)[i] = new Line();
+			(*LinesOfCol)[i]->possibleSet = possible(ConditionsOfCol[i]);
 		}
 	}
 	
 	int solve(Broad broad){
+		for(int i=0; i<25; i++){
+			for(int j=0; j<25; j++){
+				(*LinesOfRow)[i]->block[j] = broad.block[25*i+24-j];
+				(*LinesOfRow)[i]->white[j] = broad.white[25*i+24-j];
+			}
+		}
+		for(int j=0; j<25; j++){
+			for(int i=0; i<25; i++){
+				(*LinesOfCol)[j]->block[i] = broad.block[25*(24-i)+j];
+				(*LinesOfCol)[j]->white[i] = broad.white[25*(24-i)+j];
+			}
+		}
 		return 0;
 	}
 	
@@ -152,4 +167,4 @@ public :
 		}
 		return resultSet;
 	}
-}; */
+};

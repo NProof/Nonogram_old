@@ -46,7 +46,19 @@ int main (int argc, char** argv)
 				}
 				
 				Nonogram *nonogram = new Nonogram(rows, cols);
-				std::set<Broad, Broad::compare> ans = nonogram->solveAll();
+				Broad broad;
+				broad.write(1,2,1);
+				broad.write(2,2,0);
+				nonogram->solve(broad);
+				cout << broad << endl;
+				for(int i=0; i<25; i++){
+					// for(int j=0; j<25; j++){
+						cout << (*(nonogram->LinesOfRow))[i]->block << endl;
+						// cout << (*(nonogram->LinesOfCol))[i]->white << endl;
+					// }
+				}
+				
+				// std::set<Broad, Broad::compare> ans = nonogram->solveAll();
 				/* if(!ans.empty())
 					std::cout << *ans.begin() << std::endl;
 				else
