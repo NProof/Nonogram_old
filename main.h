@@ -13,11 +13,24 @@ class Broad{
 	std::bitset<625> white;
 	std::bitset<625> block;
 public :
+	Broad(){
+		white.flip();
+	}
+	
 	struct compare{
 		bool operator()(const Broad& lhs, const Broad& rhs) const {
 			return (lhs.white^rhs.white).any()||(lhs.block^rhs.block).any();
 		}
 	};
+	
+	void write(int rown, int coln, bool color){
+		if(color){
+			block[25*(rown)+coln] = 1;
+		}
+		else{
+			white[25*(rown)+coln] = 0;
+		}
+	}
 	
 	char unitspace(bool white, bool block) const {
 		if(white&&!block){

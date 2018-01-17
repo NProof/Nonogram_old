@@ -21,6 +21,8 @@ using namespace std;
 
 void case2(){
 	Broad broad;
+	broad.write(1,2,1);
+	broad.write(2,2,0);
 	cout << broad << endl;
 }
 
