@@ -1,4 +1,5 @@
 #include <bitset>
+#include <array>
 // #include <set>
 
 class Broad{
