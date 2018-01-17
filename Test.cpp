@@ -28,10 +28,20 @@ using namespace std;
 	// cout << broad << endl;
 // }
 
-void clonetest(){
-	Broad *broad1 = new Broad();
-	cout << broad1 << endl;
-	cout << new Broad(*broad1) << endl;
+// void clonetest(){
+	// Broad *broad1 = new Broad();
+	// cout << broad1 << endl;
+	// cout << new Broad(*broad1) << endl;
+// }
+
+void getLine(){
+	Broad broad = Broad();
+	broad.write(1,2,1);
+	broad.write(3,1,0);
+	Line liner1 = broad.getLineR(1);
+	Line linec1 = broad.getLineC(1);
+	cout << liner1.white << " : " << liner1.block << endl;
+	cout << linec1.white << " : " << linec1.block << endl;
 }
 
 int main (int argc, char** argv)
@@ -39,6 +49,6 @@ int main (int argc, char** argv)
 #if defined (LOCAL)
 	freopen("run.out", "w", stdout);
 #endif
-	clonetest();
+	getLine();
 	return 0;
 }

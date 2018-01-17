@@ -9,6 +9,13 @@ struct compareBitset {
 	}
 };
 
+class Line{
+public :
+	std::bitset<25> block;
+	std::bitset<25> white;
+	std::bitset<25> chang;
+};
+
 class Broad{
 	std::bitset<625> white;
 	std::bitset<625> block;
@@ -27,6 +34,24 @@ public :
 			return (lhs.white^rhs.white).any()||(lhs.block^rhs.block).any();
 		}
 	};
+	
+	Line getLineR(int index){
+		Line temp;
+		for(int i=0; i<25; i++){
+			temp.block[i] = block[25*index+24-i];
+			temp.white[i] = white[25*index+24-i];
+		}
+		return temp;
+	}
+	
+	Line getLineC(int index){
+		Line temp;
+		for(int i=0; i<25; i++){
+			temp.block[i] = block[25*(24-i)+(index)];
+			temp.white[i] = white[25*(24-i)+(index)];
+		}
+		return temp;
+	}
 	
 	void write(int rown, int coln, bool color){
 		if(color){
