@@ -17,16 +17,16 @@ public :
 		white.flip();
 	}
 	
+	Broad(const Broad &orig){
+		white = orig.white;
+		block = orig.block;
+	}
+	
 	struct compare{
 		bool operator()(const Broad& lhs, const Broad& rhs) const {
 			return (lhs.white^rhs.white).any()||(lhs.block^rhs.block).any();
 		}
 	};
-	
-	Broad(const Broad &orig){
-		white = orig.white;
-		block = orig.block;
-	}
 	
 	void write(int rown, int coln, bool color){
 		if(color){
