@@ -25,7 +25,12 @@ class Nonogram{
 	std::array<std::set<std::bitset<25>, compareBitset>, 25> *possibleSetArrayOfCol;
 public :
 	Nonogram(std::array<std::vector<int>, 25> ConditionsOfRow, std::array<std::vector<int>, 25> ConditionsOfCol){
-		
+		possibleSetArrayOfRow = new std::array<std::set<std::bitset<25>, compareBitset>, 25>();
+		possibleSetArrayOfCol = new std::array<std::set<std::bitset<25>, compareBitset>, 25>();
+		for(int i=0; i<25; i++){
+			(*possibleSetArrayOfRow)[i] = possible(ConditionsOfRow[i]);
+			(*possibleSetArrayOfCol)[i] = possible(ConditionsOfCol[i]);
+		}
 	}
 	
 	std::set<Broad, Broad::compare> solve(){
