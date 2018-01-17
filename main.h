@@ -18,9 +18,37 @@ public :
 			return (lhs.white^rhs.white).any()||(lhs.block^rhs.block).any();
 		}
 	};
+	
+	char unitspace(bool white, bool block) const {
+		if(white&&!block){
+			return '.' ;
+		}
+		else if(!white&&!block){
+			return '0' ;
+		}
+		else if(block&&white){
+			return '1' ;
+		}
+		else{
+			return '%' ;
+		}
+	}
+	
+	friend std::ostream& operator<<(std::ostream& os, const Broad& broad);
 };
 
-class Nonogram{
+std::ostream& operator<<(std::ostream& os, const Broad& broad){
+    os << " broad : " << &broad << '\n';
+	for(int i=0; i<25; i++){
+		for(int j=0; j<25; j++){
+			os << " " << broad.unitspace(broad.white[25*i+j], broad.block[25*i+j]);
+		}
+		os << '\n';
+	}
+    return os;  
+}  
+
+/* class Nonogram{
 	std::array<std::set<std::bitset<25>, compareBitset>, 25> *possibleSetArrayOfRow;
 	std::array<std::set<std::bitset<25>, compareBitset>, 25> *possibleSetArrayOfCol;
 public :
@@ -76,4 +104,4 @@ public :
 		}
 		return resultSet;
 	}
-};
+}; */
