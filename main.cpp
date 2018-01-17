@@ -4,7 +4,7 @@
 #include <vector>
 #include <set>
 
-// #include "main.h"
+#include "main.h"
 using namespace std;
 
 int main (int argc, char** argv)
@@ -45,8 +45,8 @@ int main (int argc, char** argv)
 					}                   
 				}
 				
-				/* Nonogram *nonogram = new Nonogram(rows, cols);
-				std::set<Broad, Broad::compare> ans = nonogram.solve();
+				Nonogram *nonogram = new Nonogram(rows, cols);
+				/* std::set<Broad, Broad::compare> ans = nonogram.solve();
 				if(!ans.empty())
 					std::cout << *ans.begin() << std::endl;
 				else
