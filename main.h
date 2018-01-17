@@ -33,6 +33,11 @@ public :
 		}
 	}
 	
+	int solve(Broad broad){
+		return 0;
+	}
+	
+	std::set<Broad, Broad::compare> solveAll(Broad broad = Broad()){
 		return std::set<Broad, Broad::compare>();
 	}
 	
