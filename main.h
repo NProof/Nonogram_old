@@ -3,6 +3,12 @@
 #include <vector>
 #include <set>
 
+struct compareBitset {
+	bool operator()(const std::bitset<25>& lhs, const std::bitset<25>& rhs) const { 
+		return (lhs^rhs).any();
+	}
+};
+
 class Broad{
 	std::bitset<625> white;
 	std::bitset<625> block;
