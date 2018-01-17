@@ -19,13 +19,19 @@ using namespace std;
 	// cout <<  " : " << nonogram->possible(ns).size() << endl;
 // }
 
-void case2(){
-	Broad broad;
-	broad.write(1,2,1);
-	broad.write(2,2,0);
-	cout << broad << endl;
-	broad.clean(2,2);
-	cout << broad << endl;
+// void case2(){
+	// Broad broad;
+	// broad.write(1,2,1);
+	// broad.write(2,2,0);
+	// cout << broad << endl;
+	// broad.clean(2,2);
+	// cout << broad << endl;
+// }
+
+void clonetest(){
+	Broad *broad1 = new Broad();
+	cout << broad1 << endl;
+	cout << new Broad(*broad1) << endl;
 }
 
 int main (int argc, char** argv)
@@ -33,6 +39,6 @@ int main (int argc, char** argv)
 #if defined (LOCAL)
 	freopen("run.out", "w", stdout);
 #endif
-	case2();
+	clonetest();
 	return 0;
 }

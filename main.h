@@ -23,6 +23,11 @@ public :
 		}
 	};
 	
+	Broad(const Broad &orig){
+		white = orig.white;
+		block = orig.block;
+	}
+	
 	void write(int rown, int coln, bool color){
 		if(color){
 			block[25*(rown)+coln] = 1;
