@@ -1,6 +1,7 @@
 #include <bitset>
 #include <array>
-// #include <set>
+#include <vector>
+#include <set>
 
 class Broad{
 	std::bitset<625> white;
