@@ -24,6 +24,8 @@ void case2(){
 	broad.write(1,2,1);
 	broad.write(2,2,0);
 	cout << broad << endl;
+	broad.clean(2,2);
+	cout << broad << endl;
 }
 
 int main (int argc, char** argv)

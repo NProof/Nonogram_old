@@ -32,6 +32,11 @@ public :
 		}
 	}
 	
+	void clean(int rown, int coln){
+		block[25*(rown)+coln] = 0;
+		white[25*(rown)+coln] = 1;
+	}
+	
 	char unitspace(bool white, bool block) const {
 		if(white&&!block){
 			return '.' ;
