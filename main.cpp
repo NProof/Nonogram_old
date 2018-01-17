@@ -46,7 +46,7 @@ int main (int argc, char** argv)
 				}
 				
 				Nonogram *nonogram = new Nonogram(rows, cols);
-				std::set<Broad, Broad::compare> ans = nonogram->solve();
+				std::set<Broad, Broad::compare> ans = nonogram->solveAll();
 				/* if(!ans.empty())
 					std::cout << *ans.begin() << std::endl;
 				else

@@ -33,7 +33,6 @@ public :
 		}
 	}
 	
-	std::set<Broad, Broad::compare> solve(){
 		return std::set<Broad, Broad::compare>();
 	}
 	
